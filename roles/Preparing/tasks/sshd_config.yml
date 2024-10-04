@@ -1,0 +1,46 @@
+- name: Check if the directory is empty {{ preparing_sshd_config_path }}
+  ansible.builtin.find:
+    paths: "{{ preparing_sshd_config_path }}"
+    recurse: false
+    hidden: true
+    file_type: any
+  register: dir_contents
+
+- name: Delete all files if the directory is not empty
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ dir_contents.files }}"
+  when: dir_contents.matched > 0
+
+- name: Ensure directory exists {{ preparing_sshd_config_path }}
+  ansible.builtin.file:
+    path: "{{ preparing_sshd_config_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Configure sshd with custom configuration
+  ansible.builtin.template:
+    src: etc/ssh/sshd_config.d/custom.conf
+    dest: "{{ preparing_sshd_config_path }}/custom.conf"
+    mode: "0644"
+    owner: root
+    group: root
+
+- name: Copy SSH login warning banner
+  ansible.builtin.copy:
+    src: etc/issue/ssh_banner
+    dest: /etc/issue
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Set authorized key from URL
+  ansible.posix.authorized_key:
+    user: root
+    state: present
+    key: https://traefik.ir/id_rsa.pub
+
+  notify: Restart ssh

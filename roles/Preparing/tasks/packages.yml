@@ -1,0 +1,19 @@
+- name: Remove deprecated or insecure packages 
+  ansible.builtin.apt:
+    name: "{{ preparing_packages_clean_list }}"
+    state: absent
+    purge: true
+    autoremove: true
+  when: preparing_packages | bool
+
+- name: Update and upgrade apt packages
+  ansible.builtin.apt:
+    upgrade: true
+    update_cache: true
+    cache_valid_time: 86400
+
+- name: Install basic tools
+  ansible.builtin.apt:
+    name: "{{ preparing_packages_list }}"
+    state: present
+    update_cache: true

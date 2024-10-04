@@ -1,0 +1,7 @@
+---
+# tasks file for ./roles/Preparing
+- name: Importing packages tasks
+  import_tasks: packages.yml
+
+- name: Importing sshd_config tasks
+  import_tasks: sshd_config.yml

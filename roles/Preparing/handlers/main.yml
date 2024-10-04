@@ -1,0 +1,6 @@
+---
+# handlers file for ./roles/Preparing
+- name: Restart ssh
+  systemd:
+    name: ssh
+    state: restarted

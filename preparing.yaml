@@ -1,0 +1,7 @@
+- name: Install and configure server
+  hosts: all
+  become: true
+  gather_facts: true
+  roles:
+  # preparing server and hardening
+    - { role: Preparing, become: true }

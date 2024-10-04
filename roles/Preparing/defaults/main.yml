@@ -1,0 +1,77 @@
+---
+# defaults file for ./roles/Preparing
+
+# Remove packages with known security issues
+preparing_packages: true
+preparing_packages_clean_list:
+  [xinetd, inetd, ypserv, telnet-server, rsh-server, prelink]
+
+preparing_packages_list:
+  - sysstat
+  - wget
+  - git
+  - vim
+  - nano
+  - bash-completion
+  - curl
+  - htop
+  - iftop
+  - jq
+  - ncdu
+  - unzip
+  - net-tools
+  - dnsutils
+  - atop
+  - sudo
+  - ntp
+  - fail2ban
+  - software-properties-common
+  - apache2-utils
+  - tcpdump
+  - axel
+  - iptables-persistent
+  - ntp
+  - auditd
+  - libpwquality-common
+  - cracklib-runtime
+  - autolog
+  - needrestart
+  - usbguard
+  - unattended-upgrades
+  - checksec
+  - debsums
+  - chkrootkit
+  - apt-listbugs
+  - apt-listchanges
+  - libpam-tmpdir
+
+# Configure SSHD
+
+preparing_sshd: true
+preparing_sshd_config_path: /etc/ssh/sshd_config.d/
+preparing_sshd_config:
+  port: 99
+  loglevel: VERBOSE
+  permitrootlogin: WITHOUT-PASSWORD
+  maxauthtries: 3
+  maxsessions: 2
+  logingracetime: 120
+  ignorerhosts: 'YES'
+  strictmodes: 'YES'
+  allowtcpforwarding: 'NO'
+  clientalivecountmax: 2
+  clientaliveinterval: 0
+  compression: 'NO'
+  fingerprinthash: SHA256
+  gatewayports: 'NO'
+  permituserenvironment: 'NO'
+  permittunnel: 'NO'
+  printlastlog: 'YES'
+  tcpkeepalive: 'NO'
+  usedns: 'NO'
+  x11forwarding: 'NO'
+  allowagentforwarding: 'NO'
+  allowusers: root
+  allowgroups: root
+  banner: /etc/issue
+  passwordauthentication: 'NO'
