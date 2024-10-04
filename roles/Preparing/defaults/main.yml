@@ -54,7 +54,7 @@ preparing_sshd_config:
   loglevel: VERBOSE
   permitrootlogin: WITHOUT-PASSWORD
   maxauthtries: 3
-  maxsessions: 2
+  maxsessions: 2git 
   logingracetime: 120
   ignorerhosts: 'YES'
   strictmodes: 'YES'
